@@ -20,7 +20,7 @@ const equest = [
         type: "list",
         name: "type",
         message: "What type of employee are you entering?",
-        choices: ["Intern", "Engineer", "Manager"]
+        choices: ["Intern", "Engineer"]
     }
 ];
 

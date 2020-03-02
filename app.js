@@ -19,7 +19,15 @@ const render = require("./lib/htmlRenderer");
 // Use inquirer to gather user data and push generated objects to html array
 let html = [];
 let rend;
-(async function init() {
+
+(async function startQuest() {
+    let man = await inquirer.prompt(mquest);
+    const manager = new Manager(man.name, man.id, man.email, man.office);
+    html.push(manager);
+    nextQuest();
+})();
+
+async function nextQuest() {
     try {
         let user = await inquirer.prompt(start);
         if (user.enter === true) {
@@ -44,19 +52,8 @@ let rend;
                         eng.github
                     );
                     html.push(engineer);
-                    break;
-                case "Manager":
-                    man = await inquirer.prompt(mquest);
-                    const manager = new Manager(
-                        user2.name,
-                        user2.id,
-                        user2.email,
-                        man.office
-                    );
-                    html.push(manager);
             }
-            // start questions over until user selects NO to creating new employee
-            init();
+            nextQuest();
         } else {
             rend = render(html);
             writeToFile();
@@ -64,7 +61,7 @@ let rend;
     } catch (err) {
         console.log(err);
     }
-})();
+}
 
 // write returned HTML into new file
 function writeToFile() {
@@ -76,13 +73,3 @@ function writeToFile() {
         }
     });
 }
-
-// After the user has input all employees desired, call the `render` function (required
-// above) and pass in an array containing all employee objects; the `render` function will
-// generate and return a block of HTML including templated divs for each employee!
-
-// HINT: make sure to build out your classes first! Remember that your Manager, Engineer,
-// and Intern classes should all extend from a class named Employee; see the directions
-// for further information. Be sure to test out each class and verify it generates an
-// object with the correct structure and methods. This structure will be crucial in order
-// for the provided `render` function to work!
