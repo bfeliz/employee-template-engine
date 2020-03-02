@@ -1,3 +1,5 @@
+// intern specific question
+
 const iquest = [
     {
         type: "input",

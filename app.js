@@ -1,6 +1,7 @@
-const Manager = require("./lib/Manager");
-const Engineer = require("./lib/Engineer");
-const Intern = require("./lib/Intern");
+// const Manager = require("./lib/Manager");
+// const Engineer = require("./lib/Engineer");
+// const Intern = require("./lib/Intern");
+
 // require the questions modules
 const start = require("./questions/start");
 const equest = require("./questions/equest");
@@ -17,7 +18,7 @@ const render = require("./lib/htmlRenderer");
 
 // Use inquirer to gather user data and push generated objects to html array
 let html = [];
-let array = [];
+let rend;
 (async function init() {
     try {
         let user = await inquirer.prompt(start);
@@ -36,32 +37,33 @@ let array = [];
                     man = await inquirer.prompt(mquest);
                     html.push({ ...user2, ...man });
             }
+            // start questions over until user selects NO to creating new employee
             init();
         } else {
-            // array = [Employee, Manager, Engineer, Intern];
-            // console.log(array);
-            // const newRend = render(array);
-            // console.log(newRend);
-            console.log(html);
-            // const rend = render(html);
-            // console.log(rend);
+            // send the gathered data to the htmlRenderer module
+            rend = render(html);
+            writeToFile();
         }
     } catch (err) {
         console.log(err);
     }
 })();
 
+// write returned HTML into new file
+function writeToFile() {
+    fs.writeFile(outputPath, rend, function(err) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log("File generated");
+        }
+    });
+}
+
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
-// After you have your html, you're now ready to create an HTML file using the HTML
-// returned from the `render` function. Now write it to a file named `team.html` in the
-// `output` folder. You can use the variable `outputPath` above target this location.
-// Hint: you may need to check if the `output` folder exists and create it if it
-// does not.
-// HINT: each employee type (manager, engineer, or intern) has slightly different
-// information; write your code to ask different questions via inquirer depending on
-// employee type.
+
 // HINT: make sure to build out your classes first! Remember that your Manager, Engineer,
 // and Intern classes should all extend from a class named Employee; see the directions
 // for further information. Be sure to test out each class and verify it generates an

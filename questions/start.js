@@ -1,4 +1,5 @@
-// questions array for inquirer prompts
+// beginning question
+
 const start = [
     {
         type: "confirm",
@@ -7,11 +8,5 @@ const start = [
         default: true
     }
 ];
-
-// function employee() {
-//     if (start.enter) {
-
-//     }
-// }
 
 module.exports = start;

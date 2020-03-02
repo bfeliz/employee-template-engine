@@ -1,3 +1,5 @@
+// general employee questions
+
 const equest = [
     {
         type: "input",
