@@ -1,6 +1,6 @@
-// const Manager = require("./lib/Manager");
-// const Engineer = require("./lib/Engineer");
-// const Intern = require("./lib/Intern");
+const Manager = require("./lib/Manager");
+const Engineer = require("./lib/Engineer");
+const Intern = require("./lib/Intern");
 
 // require the questions modules
 const start = require("./questions/start");
@@ -27,20 +27,37 @@ let rend;
             switch (user2.type) {
                 case "Intern":
                     int = await inquirer.prompt(iquest);
-                    html.push({ ...user2, ...int });
+                    const intern = new Intern(
+                        user2.name,
+                        user2.id,
+                        user2.email,
+                        int.school
+                    );
+                    html.push(intern);
                     break;
                 case "Engineer":
                     eng = await inquirer.prompt(enquest);
-                    html.push({ ...user2, ...eng });
+                    const engineer = new Engineer(
+                        user2.name,
+                        user2.id,
+                        user2.email,
+                        eng.github
+                    );
+                    html.push(engineer);
                     break;
                 case "Manager":
                     man = await inquirer.prompt(mquest);
-                    html.push({ ...user2, ...man });
+                    const manager = new Manager(
+                        user2.name,
+                        user2.id,
+                        user2.email,
+                        man.office
+                    );
+                    html.push(manager);
             }
             // start questions over until user selects NO to creating new employee
             init();
         } else {
-            // send the gathered data to the htmlRenderer module
             rend = render(html);
             writeToFile();
         }
