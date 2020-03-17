@@ -41,6 +41,7 @@ Opening the HTML file in browser window:
 
 JavaScript - programming language <br>
 Bootstrap - CSS Framework <br>
+node.js - JavaScript runtime
 Inquirer - npm package for command line prompts <br>
 Jest - testing package
 
